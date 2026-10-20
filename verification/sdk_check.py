@@ -1,6 +1,13 @@
 """Real pinned SDK direct-mode checks, mocked external facts. Not network consensus."""
 from pathlib import Path
 import json
+import sys
+import subprocess
+from gltest.direct import sdk_loader
+
+# Use the linter asset resolver; gltest 0.29.2 assumes an obsolete release asset URL.
+subprocess.run([str(Path(sys.executable).with_name("genvm-lint")), "download", "--version", "v0.3.0-rc7"], check=True)
+sdk_loader.CACHE_DIR = Path.home() / ".cache" / "genvm-linter"
 from gltest.direct import VMContext,deploy_contract
 p=Path(__file__).resolve().parents[1]/'contracts/recall_scope.py'
 vm=VMContext()
