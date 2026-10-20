@@ -4,7 +4,7 @@ Compare a consumer product with the scope of one official CPSC recall notice. Pr
 
 **Release 0.2 · Stable Studionet (61999)**
 
-Contract: [`0xbAE50C520ec919147058FB45F552D934635834D0`](https://explorer-studio.genlayer.com/address/0xbAE50C520ec919147058FB45F552D934635834D0)
+Contract: [`0x5EbaD2E0dA70e9aCd8f50C6837cb060965257F70`](https://explorer-studio.genlayer.com/address/0x5EbaD2E0dA70e9aCd8f50C6837cb060965257F70)
 
 Source SHA256: `f95f16a8bdf985c4db4ff87224ffee9e47d0847c3e0d5a16e4a7ed5cec4a04bb`
 
