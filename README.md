@@ -17,7 +17,7 @@ A matching brand or model may still require a manufacturer serial-number check. 
 3. The leader assesses brand/category identity, series/model/batch variant, original sale/manufacturing period, and region. Each validator independently assesses the same sealed facts and agreed notice. All four labels must agree. An additional validator audit checks that the proposed quotations and explanations support their assigned findings.
 4. Deterministic code computes the aggregate result and stores the accepted assessment with both input and notice SHA256 hashes. The exact notice is retained for later review.
 
-This is a shared, consensus-controlled record rather than an application server's private model answer. Models still can make mistakes; consensus and quotation checks do not authenticate user-supplied product facts.
+Records are shared through GenLayer consensus. Consensus and quotation checks do not authenticate user-supplied product facts.
 
 | Result | Meaning |
 | --- | --- |
@@ -53,13 +53,15 @@ Python 3.12+:
 python -m unittest discover -s tests -v
 ```
 
-The 26 tests use a small CPython harness with substituted SDK, network and model outputs. They verify boundaries, grounding, owner isolation, idempotence, disagreement rejection and write ordering. They are not a GenVM runtime test or proof of network consensus.
+Unit tests cover input boundaries, evidence grounding, owner isolation, idempotence and disagreement handling using mocked network and model responses.
 
 ## Deploy and reuse
 
 Open `contracts/recall_scope.py` in GenLayer Studio on Stable Studionet (chain 61999). The constructor takes no arguments. Deploy through your browser wallet, then supply its address to the companion app. The app checks the deployed source against its SHA256 before permitting a submission.
 
-The canonical deployment completed full-consensus execution in GenVM and finalized. Source bytes were read back and checked against the SHA256 above. The `verification/` directory contains compact network evidence and reproducible SDK checks. Browser-wallet signing is an optional integration path and has not been exercised with a real extension; Studio-assisted transactions use the official managed development signer. Dynamic CPSC text can cause strict snapshot equality to reject; this is a failed assessment, not an accepted approximation. Do not repeatedly send writes to force a preferred outcome.
+Deployment and example transaction details are available in `verification/onchain.json`. Changing notice text can prevent snapshot agreement; unsuccessful assessments do not create a record.
+
+Studio provides a managed development signer. Browser-wallet signing is experimental and has not been tested with a wallet extension.
 
 A record is specific to the notice snapshot and supplied facts. It does not certify safety, authorize resale, search all recalls or confirm a manufacturer's serial-number lookup. Inputs and results are public; do not submit confidential information.
 
@@ -72,6 +74,6 @@ python verification/sdk_check.py
 genvm-lint check contracts/recall_scope.py
 ```
 
-The helper loads the content-addressed SDK specified in the source header. Direct-mode checks use real SDK storage with mocked web/model facts; callback acceptance, rejection and serialization are checked separately. These checks do not simulate network voting. The linter reports nonfatal bare-`ValueError` warnings; these error paths fail closed and were not silently suppressed.
+The helper loads the SDK pinned in the contract header and checks storage, callbacks and serialization with mocked web/model responses. It does not simulate network consensus. The linter may report nonfatal bare-`ValueError` warnings.
 
 MIT License.
